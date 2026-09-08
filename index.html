@@ -221,6 +221,8 @@
   .result-img-wrap img{width:100%;display:block;}
   .result-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
   .footer-note{text-align:center;font-size:12px;color:#a0917f;margin-top:26px;}
+  .visitor-counter{text-align:center;margin-top:8px;}
+  .visitor-counter img{height:20px;vertical-align:middle;opacity:0.85;}
   canvas{display:none;}
 </style>
 </head>
@@ -281,12 +283,13 @@
     <div class="result-actions">
       <button class="btn pink" id="saveBtn">이미지 저장</button>
       <button class="btn sky" id="shareBtn">X에 공유하기</button>
-      <button class="btn instagram" id="instagramBtn">인스타에 공유하기</button>
+      <button class="btn instagram" id="instagramBtn">인스타에 공유</button>
     </div>
     <p class="hint" id="shareHint" style="text-align:center;display:none;"></p>
   </div>
 
   <p class="footer-note">제작: @59sagi<br>©nagano</p>
+  <p class="visitor-counter"><img id="visitorBadge" alt="방문자 수" /></p>
 </div>
 
 <canvas id="workCanvas" width="1200" height="893"></canvas>
@@ -602,6 +605,16 @@ document.getElementById('instagramBtn').addEventListener('click', async () => {
   shareHint.textContent = '이미지가 저장되었어요! 인스타그램 앱을 열어 스토리 만들기에서 저장된 이미지를 배경으로 추가해주세요.';
   shareHint.style.display = 'block';
 });
+
+// ---------- 방문자 수 카운터 (가입 불필요, 사이트별 자동 고유 집계) ----------
+(function(){
+  const badge = document.getElementById('visitorBadge');
+  if(!badge) return;
+  // 배포된 도메인(hostname) 기준으로 고유 page_id를 만들어, 서로 다른 사이트끼리 카운트가 섞이지 않도록 함
+  const host = (location.hostname || 'local-file').replace(/[^a-zA-Z0-9.-]/g, '-');
+  const pageId = encodeURIComponent(host + '.chiikawa-profile-card-maker');
+  badge.src = 'https://visitor-badge.laobi.icu/badge?page_id=' + pageId;
+})();
 </script>
 </body>
 </html>
